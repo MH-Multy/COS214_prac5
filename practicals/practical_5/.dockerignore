@@ -1,0 +1,8 @@
+.git
+.gitignore
+.vscode
+*.swp
+*.o
+campusguard
+docs/
+*.pdf

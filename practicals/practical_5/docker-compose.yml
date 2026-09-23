@@ -1,0 +1,6 @@
+services:
+  campusguard:
+    build: .
+    image: campusguard:latest
+    stdin_open: true
+    tty: true
