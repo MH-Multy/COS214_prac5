@@ -14,42 +14,45 @@ DispatchStrategy.cpp (Strategy, Strategy)
 
 #include "DispatchStrategy.h"
 #include "ResponseUnit.h"
-#include "Incident.h"
+// #include "Incident.h"
 
 // === DISPATCH STRATEGY (STRATEGY) ==== //
 
 // === HIGH SEVERITY (CONCRETE STRATEGY) === //
 
-vector<ResponseUnit*> HighSeverity::selectUnits(const Incident& incident, SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities)
+vector<ResponseUnit*> HighSeverity::selectUnits(SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities)
 {
-	throw "Not yet implemented";
+	// The incident has no use at the moment and has been removed.
+	return {security, medical, facilities};
 }
 
 string HighSeverity::label() const
 {
-	throw "Not yet implemented";
+	return "High-severity: All response teams dispatched (Security + Medical + Facilities)";
 }
 
 AlertType HighSeverity::alertMessage() const
 {
-	throw "Not yet implemented";
+	cout << "\nHigh-severity call has been detected. Please Evacuate the area\n";
+	return AlertType::EVACUATE;
 }
 
 // === LOW SEVERITY (CONCRETE STRATEGY) ==== //
 
-vector<ResponseUnit*> LowSeverity::selectUnits(const Incident& incident, SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities)
+vector<ResponseUnit*> LowSeverity::selectUnits(SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities)
 {
-	throw "Not yet implemented";
+	return {security};
 }
 
 string LowSeverity::label() const
 {
-	throw "Not yet implemented";
+	return "Low-severity: Security team dispatched (Security)";
 }
 
 AlertType LowSeverity::alertMessage() const
 {
-	throw "Not yet implemented";
+	cout << "\nLow-severity call has been detected. Initiating Lockdown of area\n";
+	return AlertType::LOCKDOWN;
 }
 
 #endif // DISPATCHSTRATEGY_CPP
