@@ -13,6 +13,8 @@ DispatchStrategy.cpp (Strategy, Strategy)
 #define DISPATCHSTRATEGY_CPP
 
 #include "DispatchStrategy.h"
+#include "ResponseUnit.h"
+#include "Incident.h"
 
 // === DISPATCH STRATEGY (STRATEGY) ==== //
 
@@ -23,12 +25,13 @@ vector<ResponseUnit*> HighSeverity::selectUnits(const Incident& incident, Securi
 	throw "Not yet implemented";
 }
 
-string HighSeverity::label()
+string HighSeverity::label() const
 {
 	throw "Not yet implemented";
 }
 
-AlertType HighSeverity::alertMessage() {
+AlertType HighSeverity::alertMessage() const
+{
 	throw "Not yet implemented";
 }
 
@@ -39,12 +42,12 @@ vector<ResponseUnit*> LowSeverity::selectUnits(const Incident& incident, Securit
 	throw "Not yet implemented";
 }
 
-string LowSeverity::label()
+string LowSeverity::label() const
 {
 	throw "Not yet implemented";
 }
 
-AlertType LowSeverity::alertMessage()
+AlertType LowSeverity::alertMessage() const
 {
 	throw "Not yet implemented";
 }

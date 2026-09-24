@@ -19,19 +19,24 @@ DispatchStrategy.h (Strategy, Strategy)
 using namespace std;
 
 #include "Types.h"
-#include "ResponseUnit.h"
-#include "Incident.h"
+
+class Incident;
+
+class ResponseUnit;
+class SecurityTeam;
+class MedicalTeam;
+class FacilitiesTeam;
 
 class DispatchStrategy
 {
 	public:
 		virtual ~DispatchStrategy() { };
 		virtual vector<ResponseUnit*> selectUnits(const Incident& incident, SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) = 0;
-		virtual string label() = 0;
+		virtual string label() const = 0;
 		/// <summary>
 		/// high severity will return evacuate and low severity will return lockdown
 		/// </summary>
-		virtual AlertType alertMessage() = 0;
+		virtual AlertType alertMessage() const = 0;
 };
 
 class HighSeverity: public DispatchStrategy
@@ -45,8 +50,8 @@ class HighSeverity: public DispatchStrategy
 		/// <summary>
 		/// return "High-severity: full response (Security + Medical + Facilities)"
 		/// </summary>
-		string label() override;
-		AlertType alertMessage();
+		string label() const override;
+		AlertType alertMessage() const override;
 };
 
 class LowSeverity: public DispatchStrategy
@@ -59,8 +64,8 @@ class LowSeverity: public DispatchStrategy
 		/// <summary>
 		/// return "Low-severity: security-only response"
 		/// </summary>
-		string label() override;
-		AlertType alertMessage();
+		string label() const override;
+		AlertType alertMessage() const override;
 };
 
 #endif // DISPATCHSTRATEGY_H
