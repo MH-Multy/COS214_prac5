@@ -44,10 +44,11 @@ string DispatchUnit::name() const
 
 // ==== SEND ALERT (CONCRETE COMMAND) ==== //
 
-SendAlert::SendAlert(AlertSender* sender, AlertType message)
+SendAlert::SendAlert(AlertSender* sender, IncidentCoordinator* coordinator, AlertType message)
 {
 	this->sender = sender;
 	this->message = message;
+	this->coordinator = coordinator;
 	this->lastCode = -1;
 }
 
@@ -67,10 +68,11 @@ string SendAlert::name() const
 
 // ==== SECURE AREA (CONCRETE COMMAND) ==== //
 
-SecureArea::SecureArea(AccessControlSystem* acs, string area)
+SecureArea::SecureArea(AccessControlSystem* acs, IncidentCoordinator* coordinator, string area)
 {
 	this->acs = acs;
 	this->area = area;
+	this->coordinator = coordinator;
 }
 
 void SecureArea::execute()

@@ -32,11 +32,6 @@ void Incident::attach(IncidentObserver* observer)
 	throw "Not yet implemented";
 }
 
-bool Incident::detach(IncidentObserver* observer)
-{
-	throw "Not yet implemented";
-}
-
 void Incident::notifyAll()
 {
 	throw "Not yet implemented";

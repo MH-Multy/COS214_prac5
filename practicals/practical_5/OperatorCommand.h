@@ -22,6 +22,7 @@ using namespace std;
 class ResponseUnit;
 class AlertSender;
 class AccessControlSystem;
+class IncidentCoordinator;
 
 class OperatorCommand
 {
@@ -70,7 +71,7 @@ class SendAlert: public OperatorCommand
 		/// note that for all the name functions, take the enum and make the output suitable for the class using conditional logic, rather than outputting the raw enum each time
 		/// </summary>
 		string name() const override;
-		SendAlert(AlertSender* sender, AlertType message);
+		SendAlert(AlertSender* sender, IncidentCoordinator* coordinator, AlertType message);
 
 	private:
 		AlertSender* sender;
@@ -78,7 +79,8 @@ class SendAlert: public OperatorCommand
 		/// <summary>
 		/// this is the last code given by notify
 		/// </summary>
-		int lastCode;
+		int lastCode = -1;
+		IncidentCoordinator* coordinator;
 };
 
 class SecureArea: public OperatorCommand
@@ -96,11 +98,12 @@ class SecureArea: public OperatorCommand
 		/// e.g. Secure: Front Gates
 		/// </summary>
 		string name() const override;
-		SecureArea(AccessControlSystem* acs, string area);
+		SecureArea(AccessControlSystem* acs, IncidentCoordinator* coordinator, string area);
 
 	private:
 		AccessControlSystem* acs;
 		string area;
+		IncidentCoordinator* coordinator;
 };
 
 #endif // OPERATORCOMMAND_H

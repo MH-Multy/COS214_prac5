@@ -34,8 +34,7 @@ enum class Severity
 enum class AlertType
 {
     LOCKDOWN,
-    EVACUATE,
-    MEDICAL_PRIORITY
+    EVACUATE
 };
 
 struct LogEntry

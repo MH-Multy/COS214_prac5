@@ -38,13 +38,6 @@ class Incident
 		Severity getSeverity() const { return this->severity; }
 		int getId() const { return this->id; }
 		void attach(IncidentObserver* observer);
-		/// <summary>
-		/// find the observer and erase it if found and return true (to help make this remove more maintainable as needed, by displaying more information); no-op if not found, return false in all other cases
-		/// note that the observers are system wide responsibility holders (sort of like a computer) so the campus guard holds computers, which outlives any one incident, but no computer-incident (observer-subject) relationship outlives the incident/subject
-		/// so we just use plain push and pops, clean up is responsibility of campus guard (that's why this is not a composition)
-		/// specifically, no orphaning can be triggered by the incident class and the incident class has nothing to give back
-		/// </summary>
-		bool detach(IncidentObserver* observer);
 		virtual ~Incident() { }
 
 	private:

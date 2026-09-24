@@ -43,6 +43,7 @@ class ResponseUnit
 class SecurityTeam : public ResponseUnit
 {
 	public:
+		SecurityTeam(string name, IncidentCoordinator* coordinator) : ResponseUnit(name, coordinator) { }
 		/// <summary>
 		/// if dispatched is already true then start a failure case (cout and return) otherwise set dispatched to true and call notifyCoordinator("[TEAM]_DISPATCHED") eg. notifyCoordinator("SECURITY_DISPATCHED")
 		/// </summary>
@@ -58,34 +59,36 @@ class SecurityTeam : public ResponseUnit
 		bool isPerimeterSecured() const { return this->perimeterSecured; }
 
 	private:
-		bool dispatched;
-		bool perimeterSecured;
+		bool dispatched = false;
+		bool perimeterSecured = false;
 };
 
 class MedicalTeam : public ResponseUnit
 {
 	public:
+		MedicalTeam(string name, IncidentCoordinator* coordinator) : ResponseUnit(name, coordinator) { }
 		void dispatch();
 		void recall();
 		bool isTreating() const { return treating; }
 		void handleEvent(const string& event) override;
 
 	private:
-		bool dispatched;
-		bool treating;
+		bool dispatched = false;
+		bool treating = false;
 };
 
 class FacilitiesTeam : public ResponseUnit
 {
 	public:
+		FacilitiesTeam(string name, IncidentCoordinator* coordinator) : ResponseUnit(name, coordinator) { }
 		void dispatch();
 		void recall();
 		bool areExitsOpened() const { return exitsOpened; }
 		void handleEvent(const string& event) override;
 
 	private:
-		bool dispatched;
-		bool exitsOpened;
+		bool dispatched = false;
+		bool exitsOpened = false;
 };
 
 #endif // RESPONSEUNIT_H

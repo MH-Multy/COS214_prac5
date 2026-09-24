@@ -68,7 +68,7 @@ class CampusGuard
 		/// <summary>
 		/// this will be the id of the next reported incident
 		/// </summary>
-		int nextId;
+		int nextId = 0;
 		unique_ptr<DispatchStrategy> strategy;
 };
 
