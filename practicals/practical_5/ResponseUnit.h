@@ -20,8 +20,6 @@ ResponseUnit.h (Colleagues, Mediator)
 
 using namespace std;
 
-class IncidentCoordinator;
-
 class ResponseUnit
 {
 	public:
@@ -42,7 +40,7 @@ class ResponseUnit
 /**
  * the operations of this class are very similar for each ResponseUnit
  */
-class SecurityTeam : ResponseUnit
+class SecurityTeam : public ResponseUnit
 {
 	public:
 		/// <summary>
@@ -64,7 +62,7 @@ class SecurityTeam : ResponseUnit
 		bool perimeterSecured;
 };
 
-class MedicalTeam : ResponseUnit
+class MedicalTeam : public ResponseUnit
 {
 	public:
 		void dispatch();
@@ -77,7 +75,7 @@ class MedicalTeam : ResponseUnit
 		bool treating;
 };
 
-class FacilitiesTeam : ResponseUnit
+class FacilitiesTeam : public ResponseUnit
 {
 	public:
 		void dispatch();

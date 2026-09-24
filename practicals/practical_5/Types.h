@@ -34,7 +34,7 @@ enum class Severity
 enum class AlertType
 {
     LOCKDOWN,
-    EVALUATE,
+    EVACUATE,
     MEDICAL_PRIORITY
 };
 
