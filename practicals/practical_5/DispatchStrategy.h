@@ -31,7 +31,7 @@ class DispatchStrategy
 {
 	public:
 		virtual ~DispatchStrategy() { };
-		virtual vector<ResponseUnit*> selectUnits(const Incident& incident, SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) = 0;
+		virtual vector<ResponseUnit*> selectUnits(SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) = 0;
 		virtual string label() const = 0;
 		/// <summary>
 		/// high severity will return evacuate and low severity will return lockdown
@@ -46,7 +46,7 @@ class HighSeverity: public DispatchStrategy
 		/// return { security, medical, facilities }
 		/// when we report an incident, we will determine the strategy used based on the severity and print its label. for each unit in the vector, the report incident will issue a command, after building a dispatch unit out of it (see the relevant functions for more info)
 		/// </summary>
-		vector<ResponseUnit*> selectUnits(const Incident& incident, SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) override;
+		vector<ResponseUnit*> selectUnits(SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) override;
 		/// <summary>
 		/// return "High-severity: full response (Security + Medical + Facilities)"
 		/// </summary>
@@ -60,7 +60,7 @@ class LowSeverity: public DispatchStrategy
 		/// <summary>
 		/// return { security }
 		/// </summary>
-		vector<ResponseUnit*> selectUnits(const Incident& incident, SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) override;
+		vector<ResponseUnit*> selectUnits(SecurityTeam* security, MedicalTeam* medical, FacilitiesTeam* facilities) override;
 		/// <summary>
 		/// return "Low-severity: security-only response"
 		/// </summary>

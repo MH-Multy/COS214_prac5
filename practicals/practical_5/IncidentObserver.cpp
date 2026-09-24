@@ -14,7 +14,7 @@ IncidentObserver.cpp (Observers, Observer)
 
 #include "IncidentObserver.h"
 #include "Incident.h"
-#include "Receiver.h"
+#include "AccessControlSystem.h"
 
 // ==== INCIDENT OBSERVER (OBSERVER) ==== //
 
