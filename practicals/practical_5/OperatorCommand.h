@@ -51,6 +51,7 @@ class DispatchUnit: public OperatorCommand
 
 	private:
 		ResponseUnit* unit;
+				bool dispatched;
 };
 
 class SendAlert: public OperatorCommand
@@ -101,6 +102,7 @@ class SecureArea: public OperatorCommand
 	private:
 		AccessControlSystem* acs;
 		string area;
+				bool secured;
 };
 
 #endif // OPERATORCOMMAND_H
