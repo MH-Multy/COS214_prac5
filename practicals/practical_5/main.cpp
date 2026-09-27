@@ -226,6 +226,8 @@ void observer_state()
     incident.setStatus(Status::ACTIVE);
 
     incident.setStatus(Status::RESOLVED);
+
+    cout << "\n🎬 [OBSERVER STATE TRANSITIONS TESTING COMPLETE] 🎬\n";
 }
 
 void test()
