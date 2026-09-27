@@ -29,17 +29,17 @@ DispatchUnit::DispatchUnit(ResponseUnit* unit)
 
 void DispatchUnit::execute()
 {
-	throw "Not yet implemented";
+	unit->dispatch();
 }
 
 void DispatchUnit::undo()
 {
-	throw "Not yet implemented";
+	unit->recall();
 }
 
 string DispatchUnit::name() const
 {
-	throw "Not yet implemented";
+	return "Dispatch unit name: " unit->getName();
 }
 
 // ==== SEND ALERT (CONCRETE COMMAND) ==== //
@@ -53,17 +53,38 @@ SendAlert::SendAlert(AlertSender* sender, IncidentCoordinator* coordinator, Aler
 }
 
 void SendAlert::execute() {
-	throw "Not yet implemented";
+	lastCode = sender->notify(message);
+	if (lastCode != -1 || lastCode != 404) // a valid code has been returned
+	{
+		cout << "ALERT_DELIVERED_" << name();
+	}
+	else
+	{
+		cout << "ALERT_NOT_DELIVERED";
+	}
 }
 
 void SendAlert::undo()
 {
-	throw "Not yet implemented";
+	cout << "System alerts can not be recalled";
 }
 
 string SendAlert::name() const
 {
-	throw "Not yet implemented";
+	string messageName;
+	switch (message)
+	{
+		case AlertType::LOCKDOWN:
+			messageName = "LOCKDOWN";
+			break;
+		case AlertType::EVACUATE:
+			messageName = "EVACUATE";
+			break;
+		case AlertType::MEDICAL_PRIORITY:
+			messageName = "MEDIACL_PRIORITY";
+			break;
+	}
+	return "Alert: " + messageName + " (code: " + to_string(lastCode) + ")";
 }
 
 // ==== SECURE AREA (CONCRETE COMMAND) ==== //

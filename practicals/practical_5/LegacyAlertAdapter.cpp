@@ -18,7 +18,7 @@ LegacyAlertAdapter.cpp (Target/Adaptee/Adapter, Adapter)
 
 void LegacyAlertSystem::sendLegacyAlert(int code)
 {
-	throw "Not yet implemented";
+	return "Legacy alert sent code: ", code;
 }
 
 // ==== LEGACY ALERT ADAPTER (ADAPTER) ==== //
@@ -30,12 +30,24 @@ LegacyAlertAdapter::LegacyAlertAdapter(LegacyAlertSystem* legacy)
 
 int LegacyAlertAdapter::notify(AlertType message)
 {
-	throw "Not yet implemented";
+	int code = codeFor(message);
+	legacy->sendLegacyAlert(code);
+	return code;
 }
 
 int LegacyAlertAdapter::codeFor(AlertType message)
 {
-	throw "Not yet implemented";
+	switch (message)
+	{
+		case AlertType::LOCKDOWN:
+			return 1;
+		case AlertType::EVACUATE:
+			return 2;
+		case AlertType::MEDICAL_PRIORITY:
+			return 3;
+	}
+	cout << "Unkown AlertTupe sent, no match found";
+	return 404;
 }
 
 #endif // LEGACYALERTADAPTER_CPP
