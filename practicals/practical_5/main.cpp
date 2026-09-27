@@ -24,7 +24,7 @@ void print_test(bool test, string success, string fail)
 
 void test_mediator_and_command() // This also tests out command
 {
-    cout << "👤 [STARTING MEDIATOR TESTS] 👤\n";
+    cout << "👤 [STARTING MEDIATOR AND COMMAND TESTS] 👤\n";
 
     SecurityTeam security("Security", nullptr);
     MedicalTeam medical("Medical", nullptr);
@@ -135,7 +135,7 @@ void test_mediator_and_command() // This also tests out command
     print_test(!facilities.isDispatched(), "✅ Facilities recalled", "⚠️ Recall did not clear dispatched");
     print_test(!facilities.areExitsOpened(), "✅ Exits reset to closed by recall", "⚠️ Recall did not reset exitsOpened");
 
-    cout << "\n👤 [MEDIATOR TESTS COMPLETE] 👤\n";
+    cout << "\n👤 [MEDIATOR AND COMMAND TESTS COMPLETE] 👤\n";
 }
 
 void test_facade_and_strategy() // Since it is testing Strategy as well we can just have them be as one
@@ -153,7 +153,7 @@ void test_facade_and_strategy() // Since it is testing Strategy as well we can j
     cout << "\n";
     guard.printLog();
 
-    cout << "\n✨ [FACADE TESTS COMPLETE] ✨\n";
+    cout << "\n✨ [FACADE AND STRATEGY TESTS COMPLETE] ✨\n";
 }
 
 void test_adapter()
@@ -169,7 +169,7 @@ void test_adapter()
     IncidentResponseDesk coordinator(&security, &medical, &facilities);
 
     SendAlert alert1 = SendAlert(sender, &coordinator, AlertType::LOCKDOWN);
-    cout << "Attempting to undo an Alert...\n"; // Before any alerts are sent
+    cout << "\nAttempting to undo an Alert...\n"; // Before any alerts are sent
     alert1.undo();
     alert1.execute();
     cout << alert1.name() << endl;
@@ -189,6 +189,60 @@ void test_observer()
     cout << "\n 🚨 [OBSERVER TESTS TO BE MADE] 🚨 \n";
 }
 
+void command_mediator_chain()
+{
+    cout << "\n🎬 [TESTING COMMAND-MEDIATOR CHAIN] 🎬\n";
+
+    SecurityTeam security("Security", nullptr);
+    MedicalTeam medical("Medical", nullptr);
+    FacilitiesTeam facilities("Facilities", nullptr);
+    IncidentResponseDesk coordinator(&security, &medical, &facilities);
+
+    security.setCoordinator(&coordinator);
+    medical.setCoordinator(&coordinator);
+    facilities.setCoordinator(&coordinator);
+
+    OperatorConsole console;
+
+    console.issueCommand(unique_ptr<DispatchUnit>(new DispatchUnit(&security)));
+    console.issueCommand(unique_ptr<DispatchUnit>(new DispatchUnit(&medical)));
+
+    cout << "\n🎬 [COMMAND-MEDIATOR CHAIN TESTING COMPLETE] 🎬\n";
+}
+
+void adapter_chain()
+{
+    cout << "\n🎬 [TESTING ADAPTER CHAIN] 🎬\n";
+
+    LegacyAlertSystem legacy;
+    LegacyAlertAdapter adapter(&legacy);
+    OperatorConsole console;
+
+    console.issueCommand(unique_ptr<SendAlert>(
+    new SendAlert(&adapter, nullptr, AlertType::EVACUATE)));
+
+    cout << "\n🎬 [ADAPTER CHAIN TESTING COMPLETE] 🎬\n";
+}
+
+void observer_state()
+{
+    cout << "\n🎬 [TESTING OBSERVER STATE TRANSITIONS] 🎬\n";
+
+    Incident incident(99, "Demo Area", Severity::HIGH);
+    AccessControlSystem acs;
+    AccessControlObserver accessObserver(&acs);
+    IncidentLogObserver logObserver;
+
+    incident.attach(&accessObserver);
+    incident.attach(&logObserver);
+
+    incident.setStatus(Status::ACTIVE);
+
+    incident.setStatus(Status::RESOLVED);
+
+    cout << "\n🎬 [OBSERVER STATE TRANSITIONS TESTING COMPLETE] 🎬\n";
+}
+
 void test()
 {
     cout << "🧪 CONDUCTING STATIC TESTS OF ALL DESIGN PATTERNS 🧪\n";
@@ -196,6 +250,9 @@ void test()
     test_facade_and_strategy();
     test_adapter();
     test_observer();
+    command_mediator_chain();
+    adapter_chain();
+    observer_state();
     cout << "✅ TESTS COMPLETE ✅\n";
 }
 
