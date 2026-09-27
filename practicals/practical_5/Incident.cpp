@@ -28,7 +28,7 @@ void Incident::setStatus(Status status)
 {
 	// a status that has not actually changed is not a status change; notifying
 	// here would duplicate every log entry and re-lock areas that are already locked
-	if (status == this->status && status != Status::REPORTED)
+	if (status == this->status)
 	{
 		cout << "⚠️ [Incident " << this->id << "] already in this state, no notification sent" << endl;
 		return;

@@ -32,12 +32,7 @@ void IncidentLogObserver::onStatusChange(Incident& incident)
 
 	this->log.push_back(entry);
 
-<<<<<<< HEAD
-	cout << "  [IncidentLog] Recorded incident " << entry.id
-	     << " (" << incident.getArea() << ")" << endl;
-=======
-	cout << "✍️ [IncidentLog] recorded incident " << entry.id << " (" << incident.getArea() << ")" << endl;
->>>>>>> observer
+	cout << "✍️ [IncidentLog] Recorded incident " << entry.id << " (" << incident.getArea() << ")" << endl;
 }
 
 void IncidentLogObserver::printLog() const
@@ -58,6 +53,9 @@ void IncidentLogObserver::printLog() const
 			case Status::RESOLVED:
 				statusName = "✅ RESOLVED";
 				break;
+			default:
+				statusName = "⚠️ Unknown";
+				break;
 		}
 
 		cout << "   Incident #" << it->id << "  ->  " << statusName << endl;
@@ -71,11 +69,7 @@ void AccessControlObserver::onStatusChange(Incident& incident)
 {
 	if (this->acs == nullptr)
 	{
-<<<<<<< HEAD
-		cout << "  [AccessControlObserver] No access-control system attached" << endl;
-=======
-		cout << "⚠️ [AccessControlObserver] no access-control system attached" << endl;
->>>>>>> observer
+		cout << "⚠️ [AccessControlObserver] No access-control system attached" << endl;
 		return;
 	}
 
@@ -89,40 +83,21 @@ void AccessControlObserver::onStatusChange(Incident& incident)
 	{
 		try
 		{
-<<<<<<< HEAD
-			cout << "  [AccessControlObserver] Incident " << incident.getId()
-			     << " is active, securing " << incident.getArea() << endl;
-=======
->>>>>>> observer
 			this->acs->lockArea(incident.getArea());
 			cout << "🔒 [AccessControlObserver] Incident #" << incident.getId() << " is active, securing " << incident.getArea() << "." << endl;
 		}
 		catch(const std::exception& e)
 		{
-<<<<<<< HEAD
-			cout << "  [AccessControlObserver] Incident " << incident.getId()
-			     << " is resolved, releasing " << incident.getArea() << endl;
-			this->acs->unlockArea(incident.getArea());
-=======
 			cout << "ℹ️ [AccessControlObserver] Could not lock " << incident.getArea() << ": " << e.what() << endl;
 		} // failure cases
 		catch (...)
 		{
 			cout << "⚠️ [AccessControlObserver] Access-control refused the request" << endl;
->>>>>>> observer
 		}
 	}
 
 	else if (incident.getStatus() == Status::RESOLVED)
 	{
-<<<<<<< HEAD
-		cout << "  [AccessControlObserver] Access-control refused the request: "
-		     << e.what() << endl;
-	}
-	catch (...)
-	{
-		cout << "  [AccessControlObserver] Access-control refused the request" << endl;
-=======
 		try
 		{
 			this->acs->unlockArea(incident.getArea());
@@ -136,7 +111,6 @@ void AccessControlObserver::onStatusChange(Incident& incident)
 		{
 			cout << "⚠️ [AccessControlObserver] Access-control refused the request" << endl;
 		}
->>>>>>> observer
 	}
 }
 

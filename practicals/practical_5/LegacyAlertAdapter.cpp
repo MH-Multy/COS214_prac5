@@ -44,7 +44,7 @@ int LegacyAlertAdapter::codeFor(AlertType message)
 		case AlertType::EVACUATE:
 			return 2;
 	}
-	cout << "⚠️ Unkown AlertType sent, no match found" << endl;
+	cout << "⚠️ Unknown AlertType sent, no match found" << endl;
 	return 404;
 }
 

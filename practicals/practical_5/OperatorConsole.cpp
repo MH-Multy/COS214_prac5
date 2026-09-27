@@ -36,7 +36,7 @@ void OperatorConsole::cancelLast()
 {
 	if (history.empty())
 	{
-		cout << "ℹ️  Nothing to cancel, command history is empty." << endl;
+		cout << "ℹ️ Nothing to cancel, command history is empty." << endl;
 		return;
 	}
 	cout << "↩️  Cancelling: " << history.back()->name() << endl;
