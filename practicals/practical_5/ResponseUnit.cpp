@@ -24,58 +24,132 @@ ResponseUnit::ResponseUnit(string name, IncidentCoordinator* coordinator)
 
 void ResponseUnit::notifyCoordinator(const string& event)
 {
-	throw "Not yet implemented";
+	if (coordinator)
+		coordinator->coordinate(this, event); // pass to the coordinator
+	else cout << "⚠️ " << name << " has no coordinator.";
 }
 
 // ==== SECURITY TEAM (CONCRETE COLLEAGUE) ==== //
 
 void SecurityTeam::dispatch()
 {
-	throw "Not yet implemented";
+	if (dispatched)
+	{
+		// here we do logic handling for if a unit is already dispatched
+		cout << "⚠️ " << name << " is already dispatched. Duplicate order ignored." << endl;
+		return;
+	}
+	dispatched = true;
+	cout << "🚓 " << name << " dispatched to the scene." << endl;
+	notifyCoordinator(Events::SECURITY_DISPATCHED);
 }
 
 void SecurityTeam::recall()
 {
-	throw "Not yet implemented";
+	if (!dispatched)
+	{
+		cout << "⚠️ " << "Cannot recall a non-dispatched unit." << endl;
+		return;
+	}
+	if (perimeterSecured) perimeterSecured = false;
+	dispatched = false;
+	cout << "↩️ " << name << " recalled." << endl;
 }
 
 void SecurityTeam::handleEvent(const string& event)
 {
-	throw "Not yet implemented";
+	if (event == Events::MEDICAL_DISPATCHED && dispatched)
+	{
+		perimeterSecured = true;
+		cout << "🛡️ [Mediator] " << name << " secures the perimeter now that Medical is on scene." << endl;
+	}
+	else if (!dispatched)
+	{
+		cout << "⚠️ " << name << " is not yet on the scene."  << endl;
+	}
+	// should the security need to handle a medical dispatch, the perimeter will be secured
+	// if there is no available security, there is nothing they can do
 }
 
 // === FACILITIES TEAM (CONCRETE COLLEAGUE) ==== //
 
 void FacilitiesTeam::dispatch()
 {
-	throw "Not yet implemented";
+	if (dispatched)
+	{
+		// here we do logic handling for if a unit is already dispatched
+		cout << "⚠️ " << name << " is already dispatched. Duplicate order ignored." << endl;
+		return;
+	}
+	dispatched = true;
+	cout << "🔧 " << name << " dispatched to the scene." << endl;
+	notifyCoordinator(Events::FACILITIES_DISPATCHED);
 }
 
 void FacilitiesTeam::recall()
 {
-	throw "Not yet implemented";
+	if (!dispatched)
+	{
+		cout << "⚠️ " << "Cannot recall a non-dispatched unit." << endl;
+		return;
+	}
+	if (exitsOpened) exitsOpened = false;
+	dispatched = false;
+	cout << "↩️ " << name << " recalled." << endl;
 }
 
 void FacilitiesTeam::handleEvent(const string& event)
 {
-	throw "Not yet implemented";
+	if (event == Events::EVACUATION_ORDERED && dispatched)
+	{
+		exitsOpened = true;
+		cout << "🚪 [Mediator] " << name << " throws open the emergency exits." << endl;
+	}
+	else if (!dispatched)
+	{
+		cout << "⚠️ " << name << " is not yet on the scene."  << endl;
+	}
 }
 
 // ==== MEDICAL TEAM (CONCRETE COLLEAGUE) ==== //
 
 void MedicalTeam::dispatch()
 {
-	throw "Not yet implemented";
+	if (dispatched)
+	{
+		// here we do logic handling for if a unit is already dispatched
+		cout << "⚠️ " << name << " is already dispatched. Duplicate order ignored." << endl;
+		return;
+	}
+	dispatched = true;
+	cout << "🚑 " << name << " dispatched to the scene." << endl;
+	notifyCoordinator(Events::MEDICAL_DISPATCHED);
 }
 
 void MedicalTeam::recall()
 {
-	throw "Not yet implemented";
+	if (!dispatched)
+	{
+		cout << "⚠️ " << "Cannot recall a non-dispatched unit." << endl;
+		return;
+	}
+	if (treating) treating = false;
+	dispatched = false;
+	cout << "↩️ " << name << " recalled." << endl;
 }
 
 void MedicalTeam::handleEvent(const string& event)
 {
-	throw "Not yet implemented";
+	// medical team on-site treats if the area is secured
+	if (event == Events::AREA_SECURED && dispatched)
+	{
+		treating = true;
+		cout << "💉 [Mediator] " << name << " begins treating patients now that the area is secured." << endl;
+	}
+	else if (!dispatched)
+	{
+		cout << "⚠️ " << name << " is not yet on the scene."  << endl;
+	}
 }
 
 #endif // RESPONSEUNIT_CPP

@@ -8,3 +8,8 @@ Last Modified: 27 September 2026
 
 demo.cpp (Interactive, dynamic demo)
 */
+
+int main()
+{
+    return 0;
+}
