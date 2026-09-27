@@ -22,7 +22,7 @@ void print_test(bool test, string success, string fail)
     else cout << fail << "\n";
 }
 
-void test_mediator()
+void test_mediator_and_command() // This also tests out command
 {
     cout << "👤 [STARTING MEDIATOR TESTS] 👤\n";
 
@@ -138,9 +138,9 @@ void test_mediator()
     cout << "\n👤 [MEDIATOR TESTS COMPLETE] 👤\n";
 }
 
-void test_facade()
+void test_facade_and_strategy() // Since it is testing Strategy as well we can just have them be as one
 {
-    cout << "\n✨ [STARTING FACADE TESTS] ✨\n";
+    cout << "\n✨ [STARTING FACADE AND STRATEGY TESTS] ✨\n";
     CampusGuard guard;
     cout << "\n[TEST HIGH SEVERITY]\n";
     Incident& high_severity = guard.reportIncident("Library", Severity::HIGH);
@@ -158,33 +158,44 @@ void test_facade()
 
 void test_adapter()
 {
+    cout << "\n✨ [ADAPTER TESTS START] ✨\n";
+    LegacyAlertSystem legacy;
+    AlertSender* sender = new LegacyAlertAdapter(&legacy);
 
-}
+    SecurityTeam security("Security", nullptr);
+    MedicalTeam medical("Medical", nullptr);
+    FacilitiesTeam facilities("Facilities", nullptr);
 
-void test_strategy()
-{
+    IncidentResponseDesk coordinator(&security, &medical, &facilities);
 
+    SendAlert alert1 = SendAlert(sender, &coordinator, AlertType::LOCKDOWN);
+    cout << "Attempting to undo an Alert...\n"; // Before any alerts are sent
+    alert1.undo();
+    alert1.execute();
+    cout << alert1.name() << endl;
+    cout << "Attempting to undo an Alert...\n"; // Code 1 should be active
+    alert1.undo();
+    SendAlert alert2 = SendAlert(sender, &coordinator, AlertType::EVACUATE);
+    alert2.execute();
+    cout << alert2.name() << endl;
+    cout << "Attempting to undo an Alert...\n"; // Code 2 should be active
+    alert2.undo();
+    delete sender;
+    cout << "\n✨ [ADAPTER TESTS COMPLETE] ✨\n";
 }
 
 void test_observer()
 {
-
-}
-
-void test_command()
-{
-
+    cout << "\n 🚨 [OBSERVER TESTS TO BE MADE] 🚨 \n";
 }
 
 void test()
 {
     cout << "🧪 CONDUCTING STATIC TESTS OF ALL DESIGN PATTERNS 🧪\n";
-    test_mediator();
-    test_facade();
-    test_strategy();
+    test_mediator_and_command();
+    test_facade_and_strategy();
     test_adapter();
     test_observer();
-    test_command();
     cout << "✅ TESTS COMPLETE ✅\n";
 }
 
