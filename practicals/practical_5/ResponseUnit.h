@@ -14,6 +14,8 @@ ResponseUnit.h (Colleagues, Mediator)
 
 #include <iostream>
 #include <string>
+#include <exception>
+#include <stdexcept>
 
 #include "IncidentCoordinator.h"
 #include "Types.h"

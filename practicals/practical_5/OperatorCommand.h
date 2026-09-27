@@ -14,6 +14,8 @@ OperatorCommand.h (Command & Concrete Command, Command)
 
 #include <string>
 #include <iostream>
+#include <exception>
+#include <stdexcept>
 
 #include "Types.h"
 
@@ -52,7 +54,7 @@ class DispatchUnit: public OperatorCommand
 
 	private:
 		ResponseUnit* unit;
-		bool dispatched;
+		bool dispatched = false;
 };
 
 class SendAlert: public OperatorCommand
