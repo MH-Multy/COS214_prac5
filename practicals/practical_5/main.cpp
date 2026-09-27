@@ -13,6 +13,9 @@ main.cpp (Static tests)
 #include "ResponseUnit.h"
 #include "IncidentCoordinator.h"
 
+// ===== FACADE ===== //
+#include "CampusGuard.h"
+
 void print_test(bool test, string success, string fail)
 {
     if (test) cout << success << "\n";
@@ -137,7 +140,20 @@ void test_mediator()
 
 void test_facade()
 {
+    cout << "\n✨ [STARTING FACADE TESTS] ✨\n";
+    CampusGuard guard;
+    cout << "\n[TEST HIGH SEVERITY]\n";
+    Incident& high_severity = guard.reportIncident("Library", Severity::HIGH);
+    guard.resolveIncident(high_severity);
 
+    cout << "\n[TEST LOW SEVERITY]\n";
+    Incident& low_severity = guard.reportIncident("Parking Lot", Severity::LOW);
+    guard.resolveIncident(low_severity);
+
+    cout << "\n";
+    guard.printLog();
+
+    cout << "\n✨ [FACADE TESTS COMPLETE] ✨\n";
 }
 
 void test_adapter()
