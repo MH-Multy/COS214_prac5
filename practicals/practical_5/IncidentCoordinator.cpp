@@ -28,7 +28,12 @@ IncidentResponseDesk::IncidentResponseDesk(SecurityTeam* security, MedicalTeam* 
 
 void IncidentResponseDesk::coordinate(ResponseUnit* sender, const string& event)
 {
-	throw "Not yet implemented";
+	if (event == "Event[0]") // MEDICAL_DISPATCHED
+        security->handleEvent(event);
+    else if (event == "Event[1]") // AREA_SECURED
+        medical->handleEvent(event);
+    else if (event == Event[2]) // ALERT_DELIVERED_EVACUATE
+        facilities->handleEvent("EVACUATION_ORDERED");
 }
 
 #endif // INCIDENTCOORDINATOR_CPP

@@ -44,4 +44,12 @@ struct LogEntry
     Status status;
 };
 
+string Event[] =
+{
+    "MEDICAL_DISPATCHED",
+    "AREA_SECURED",
+    "ALERT_DELIVERED_EVACUATE",
+    "EVACUATION_ORDERED"
+};
+
 #endif // TYPES_H
