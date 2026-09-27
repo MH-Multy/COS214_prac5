@@ -30,6 +30,9 @@ class ResponseUnit
 		virtual void dispatch() = 0;
 		virtual void recall() = 0;
 
+		// allows to set a coordinator after construction
+		void setCoordinator(IncidentCoordinator* coordinator) { this->coordinator = coordinator; }
+
 	protected:
 		/// <summary>
 		/// coordinator->coordinate(this, event)
@@ -59,6 +62,7 @@ class SecurityTeam : public ResponseUnit
 		/// </summary>
 		void handleEvent(const string& event) override;
 		bool isPerimeterSecured() const { return this->perimeterSecured; }
+		bool isDispatched() const { return dispatched; }
 
 	private:
 		bool dispatched = false;
@@ -72,6 +76,7 @@ class MedicalTeam : public ResponseUnit
 		void dispatch();
 		void recall();
 		bool isTreating() const { return treating; }
+		bool isDispatched() const { return dispatched; }
 		void handleEvent(const string& event) override;
 
 	private:
@@ -86,6 +91,7 @@ class FacilitiesTeam : public ResponseUnit
 		void dispatch();
 		void recall();
 		bool areExitsOpened() const { return exitsOpened; }
+		bool isDispatched() const { return dispatched; }
 		void handleEvent(const string& event) override;
 
 	private:

@@ -44,4 +44,15 @@ struct LogEntry
     Status status;
 };
 
+// minimises typos
+namespace Events
+{
+    const string MEDICAL_DISPATCHED = "MEDICAL_DISPATCHED";
+    const string AREA_SECURED = "AREA_SECURED";
+    const string ALERT_DELIVERED_EVACUATE = "ALERT_DELIVERED_EVACUATE";
+    const string EVACUATION_ORDERED = "EVACUATION_ORDERED";
+    const string SECURITY_DISPATCHED = "SECURITY_DISPATCHED";
+    const string FACILITIES_DISPATCHED = "FACILITIES_DISPATCHED";
+}
+
 #endif // TYPES_H
