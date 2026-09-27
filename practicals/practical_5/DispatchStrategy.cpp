@@ -28,12 +28,12 @@ vector<ResponseUnit*> HighSeverity::selectUnits(SecurityTeam* security, MedicalT
 
 string HighSeverity::label() const
 {
-	return "High-severity: All response teams dispatched (Security + Medical + Facilities)";
+	return "🔥 High-severity: All response teams dispatched (Security + Medical + Facilities)";
 }
 
 AlertType HighSeverity::alertMessage() const
 {
-	cout << "\nHigh-severity call has been detected. Please Evacuate the area\n";
+	cout << "🚁 High-severity call has been detected. Please Evacuate the area.";
 	return AlertType::EVACUATE;
 }
 
@@ -46,12 +46,12 @@ vector<ResponseUnit*> LowSeverity::selectUnits(SecurityTeam* security, MedicalTe
 
 string LowSeverity::label() const
 {
-	return "Low-severity: Security team dispatched (Security)";
+	return "🟡 Low-severity: Security-only response";
 }
 
 AlertType LowSeverity::alertMessage() const
 {
-	cout << "\nLow-severity call has been detected. Initiating Lockdown of area\n";
+	cout << "🔐 Low-severity incident has been detected. Initiating Lockdown of area.";
 	return AlertType::LOCKDOWN;
 }
 
