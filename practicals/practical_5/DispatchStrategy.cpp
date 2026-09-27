@@ -33,7 +33,7 @@ string HighSeverity::label() const
 
 AlertType HighSeverity::alertMessage() const
 {
-	cout << "🚁 High-severity call has been detected. Please Evacuate the area.";
+	cout << "🚁 High-severity call has been detected. Please Evacuate the area." << endl;
 	return AlertType::EVACUATE;
 }
 
@@ -51,7 +51,7 @@ string LowSeverity::label() const
 
 AlertType LowSeverity::alertMessage() const
 {
-	cout << "🔐 Low-severity incident has been detected. Initiating Lockdown of area.";
+	cout << "🔐 Low-severity incident has been detected. Initiating Lockdown of area." << endl;
 	return AlertType::LOCKDOWN;
 }
 

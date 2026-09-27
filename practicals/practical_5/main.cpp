@@ -40,7 +40,7 @@ void test_mediator()
 
     security.dispatch();
     print_test(security.isDispatched(), "✅ Dispatch successful", "⚠️ Dispatch failed");
-    print_test(!security.isPerimeterSecured(), "✅ Perimiter remains unsecured", "⚠️ Perimeter inexplainably secured");
+    print_test(!security.isPerimeterSecured(), "✅ Perimeter remains unsecured", "⚠️ Perimeter inexplainably secured");
 
     security.dispatch(); // double dispatch
     print_test(security.isDispatched(), "✅ Security still dispatched, double-dispatch survived", "⚠️ Double dispatch does not work");
@@ -48,7 +48,7 @@ void test_mediator()
     cout << "\n[TESTING RECALL]\n";
     security.recall();
     print_test(!security.isDispatched(), "✅ Recall successful", "⚠️ Recall did not reset flags");
-    print_test(!security.isPerimeterSecured(), "✅ Perimiter remains unsecured", "⚠️ Perimeter inexplainably secured");
+    print_test(!security.isPerimeterSecured(), "✅ Perimeter remains unsecured", "⚠️ Perimeter inexplainably secured");
 
     security.recall(); // double recall
     print_test(!security.isDispatched(), "✅ Security still recalled, double-recall survived", "⚠️ Double recall does not work");
@@ -59,7 +59,7 @@ void test_mediator()
 
     security.dispatch();
     print_test(security.isDispatched(), "✅ Security dispatched", "⚠️ Security not dispatched");
-    print_test(!security.isPerimeterSecured(), "✅ Perimiter unsecured before medical dispatch", "⚠️ Perimeter inexplainably secured");
+    print_test(!security.isPerimeterSecured(), "✅ Perimeter unsecured before medical dispatch", "⚠️ Perimeter inexplainably secured");
 
     medical.dispatch();
     print_test(medical.isDispatched(), "✅ Medical dispatched", "⚠️ Medical not dispatched");

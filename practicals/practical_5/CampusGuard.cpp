@@ -46,6 +46,8 @@ Incident& CampusGuard::reportIncident(string area, Severity severity)
 
 	cout << "\n🚨🚨🚨 New Incident #" << incident.getId() << " reported @ " << area << " 🚨🚨🚨" << endl;
 
+	incident.setStatus(Status::REPORTED);
+
 	strategy = strategyFor(severity);
 	cout << "🧭 Dispatch strategy selected: " << strategy->label() << endl;
 
