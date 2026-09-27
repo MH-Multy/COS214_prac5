@@ -1,5 +1,5 @@
 /*
-Emmanuel Boateng (u23586975)
+Emmanuel Boateng (23586975)
 Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 

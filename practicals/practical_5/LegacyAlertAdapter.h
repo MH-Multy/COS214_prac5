@@ -1,10 +1,10 @@
 /*
-Emmanuel Boateng ()
+Emmanuel Boateng (23586975)
 Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 24 September 2026
+Last Modified: 27 September 2026
 
 LegacyAlertAdapter.h (Target/Adaptee/Adapter, Adapter)
 */
@@ -13,6 +13,9 @@ LegacyAlertAdapter.h (Target/Adaptee/Adapter, Adapter)
 #define LEGACYALERTADAPTER_H
 
 #include "Types.h"
+
+#include <iostream>
+#include <string>
 
 using namespace std;
 

@@ -1,10 +1,10 @@
 /*
-Emmanuel Boateng ()
+Emmanuel Boateng (23586975)
 Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 24 September 2026
+Last Modified: 27 September 2026
 
 LegacyAlertAdapter.cpp (Target/Adaptee/Adapter, Adapter)
 */
@@ -18,7 +18,7 @@ LegacyAlertAdapter.cpp (Target/Adaptee/Adapter, Adapter)
 
 void LegacyAlertSystem::sendLegacyAlert(int code)
 {
-	return "Legacy alert sent code: ", code;
+	cout << "Legacy alert sent code: " << code;
 }
 
 // ==== LEGACY ALERT ADAPTER (ADAPTER) ==== //
@@ -43,10 +43,8 @@ int LegacyAlertAdapter::codeFor(AlertType message)
 			return 1;
 		case AlertType::EVACUATE:
 			return 2;
-		case AlertType::MEDICAL_PRIORITY:
-			return 3;
 	}
-	cout << "Unkown AlertTupe sent, no match found";
+	cout << "Unkown AlertType sent, no match found";
 	return 404;
 }
 

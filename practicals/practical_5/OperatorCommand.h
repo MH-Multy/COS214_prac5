@@ -1,10 +1,10 @@
 /*
-Emmanuel Boateng ()
+Emmanuel Boateng (23586975)
 Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 24 September 2026
+Last Modified: 27 September 2026
 
 OperatorCommand.h (Command & Concrete Command, Command)
 */
@@ -52,7 +52,7 @@ class DispatchUnit: public OperatorCommand
 
 	private:
 		ResponseUnit* unit;
-				bool dispatched;
+		bool dispatched;
 };
 
 class SendAlert: public OperatorCommand
@@ -105,7 +105,7 @@ class SecureArea: public OperatorCommand
 		AccessControlSystem* acs;
 		string area;
 		IncidentCoordinator* coordinator;
-				bool secured;
+		bool secured;
 };
 
 #endif // OPERATORCOMMAND_H

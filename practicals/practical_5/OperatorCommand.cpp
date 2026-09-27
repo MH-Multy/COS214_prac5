@@ -1,5 +1,5 @@
 /*
-Emmanuel Boateng (u23586975)
+Emmanuel Boateng (23586975)
 Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
@@ -135,9 +135,6 @@ string SendAlert::name() const
 			break;
 		case AlertType::EVACUATE:
 			messageName = "EVACUATE";
-			break;
-		case AlertType::MEDICAL_PRIORITY:
-			messageName = "MEDICAL_PRIORITY";
 			break;
 	}
 

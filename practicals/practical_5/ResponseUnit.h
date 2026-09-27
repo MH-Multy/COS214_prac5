@@ -1,10 +1,10 @@
 /*
-Emmanuel Boateng ()
+Emmanuel Boateng (23586975)
 Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 24 September 2026
+Last Modified: 27 September 2026
 
 ResponseUnit.h (Colleagues, Mediator)
 */
@@ -27,6 +27,8 @@ class ResponseUnit
 		virtual void handleEvent(const string& event) = 0;
 		virtual ~ResponseUnit() { } // coordinator is non-owning
 		string getName() const { return this->name; }
+		virtual void dispatch() = 0;
+		virtual void recall() = 0;
 
 	protected:
 		/// <summary>
