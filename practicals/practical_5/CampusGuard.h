@@ -48,6 +48,7 @@ class CampusGuard
 		/// take the incident and set its status to resolved, that will cause the observers to react
 		/// </summary>
 		void resolveIncident(Incident& incident);
+		void printLog() const; // to print the logs accumulated
 
 	private:
 		/// <summary>
