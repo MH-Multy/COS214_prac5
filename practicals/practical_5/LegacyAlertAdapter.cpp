@@ -18,7 +18,7 @@ LegacyAlertAdapter.cpp (Target/Adaptee/Adapter, Adapter)
 
 void LegacyAlertSystem::sendLegacyAlert(int code)
 {
-	cout << "Legacy alert sent code: " << code;
+	cout << "📟 [Legacy Panel] Siren code " << code << " triggered on the old alert panel." << endl;
 }
 
 // ==== LEGACY ALERT ADAPTER (ADAPTER) ==== //
@@ -44,7 +44,7 @@ int LegacyAlertAdapter::codeFor(AlertType message)
 		case AlertType::EVACUATE:
 			return 2;
 	}
-	cout << "Unkown AlertType sent, no match found";
+	cout << "⚠️ Unkown AlertType sent, no match found" << endl;
 	return 404;
 }
 
