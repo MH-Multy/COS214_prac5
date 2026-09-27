@@ -15,6 +15,7 @@ CampusGuard.h (Facade)
 #include <memory>
 #include <string>
 #include <vector>
+#include <cstddef>
 
 using namespace std;
 
