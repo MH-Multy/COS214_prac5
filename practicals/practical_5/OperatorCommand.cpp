@@ -12,10 +12,6 @@ OperatorCommand.cpp (Command & Concrete Command, Command)
 #ifndef OPERATORCOMMAND_CPP
 #define OPERATORCOMMAND_CPP
 
-#include <exception>
-#include <string>
-#include <iostream>
-
 using namespace std;
 
 #include "OperatorCommand.h"
@@ -28,14 +24,13 @@ using namespace std;
 DispatchUnit::DispatchUnit(ResponseUnit* unit)
 {
 	this->unit = unit;
-	this->dispatched = false;
 }
 
 void DispatchUnit::execute()
 {
 	if (this->unit == nullptr)
 	{
-		cout << "[DispatchUnit] refused: no unit assigned" << endl;
+		cout << "⚠️ [DispatchUnit] Refused: no unit assigned" << endl;
 		return;
 	}
 
@@ -43,7 +38,7 @@ void DispatchUnit::execute()
 	// already deployed, and a later undo recalls it from the wrong incident
 	if (this->dispatched)
 	{
-		cout << "[DispatchUnit] refused: " << this->unit->getName()
+		cout << "⚠️ [DispatchUnit] Refused: " << this->unit->getName()
 		     << " has already been dispatched by this command" << endl;
 		return;
 	}
@@ -56,7 +51,7 @@ void DispatchUnit::undo()
 {
 	if (!this->dispatched)
 	{
-		cout << "[DispatchUnit] nothing to undo: no unit was dispatched" << endl;
+		cout << "⚠️ [DispatchUnit] Nothing to undo: no unit was dispatched" << endl;
 		return;
 	}
 
@@ -68,10 +63,10 @@ string DispatchUnit::name() const
 {
 	if (this->unit == nullptr)
 	{
-		return "Dispatch: (no unit)";
+		return "🚨 Dispatch: (no unit)";
 	}
 
-	return "Dispatch: " + this->unit->getName();
+	return "🚨 Dispatch: " + this->unit->getName();
 }
 
 // ==== SEND ALERT (CONCRETE COMMAND) ==== //
@@ -88,28 +83,39 @@ void SendAlert::execute()
 {
 	if (this->sender == nullptr)
 	{
-		cout << "[SendAlert] refused: no alert service configured" << endl;
+		cout << "⚠️ [SendAlert] Refused: no alert service configured" << endl;
 		return;
 	}
 
 	if (this->lastCode != -1)
 	{
-		cout << "[SendAlert] refused: this alert has already been issued" << endl;
+		cout << "⚠️ [SendAlert] Refused: this alert has already been issued" << endl;
 		return;
 	}
 
 	this->lastCode = this->sender->notify(this->message);
 
-	// both sentinels must fail for the code to be valid, so this is a conjunction;
-	// with || the condition is true for every possible value
-	if (this->lastCode != -1 && this->lastCode != 404)
+	if (this->lastCode == -1 || this->lastCode == 404)
 	{
-		cout << "ALERT_DELIVERED_" << name() << endl;
-	}
-	else
-	{
-		cout << "ALERT_NOT_DELIVERED" << endl;
+		cout << "❌ ALERT_NOT_DELIVERED" << endl;
 		this->lastCode = -1;
+		return;
+	}
+
+	cout << "✅ ALERT_DELIVERED " << name() << endl;
+
+	// on successful delivery, tell the mediator so it can route to the right team
+	if (this->coordinator != nullptr)
+    {
+		switch (this->message)
+		{
+			case AlertType::EVACUATE:
+				this->coordinator->coordinate(nullptr, Events::ALERT_DELIVERED_EVACUATE);
+				break;
+			case AlertType::LOCKDOWN:
+				this->coordinator->coordinate(nullptr, Events::ALERT_DELIVERED_LOCKDOWN);
+				break;
+		}
 	}
 }
 
@@ -117,11 +123,11 @@ void SendAlert::undo()
 {
 	if (this->lastCode == -1)
 	{
-		cout << "[SendAlert] nothing to undo: no alert was delivered" << endl;
+		cout << "[SendAlert] Nothing to undo: no alert was delivered" << endl;
 		return;
 	}
 
-	cout << "[SendAlert] system alerts cannot be recalled; alert code "
+	cout << "🚫 [SendAlert] Alerts cannot be recalled once broadcast; alert code "
 	     << this->lastCode << " remains in effect" << endl;
 }
 
@@ -131,14 +137,17 @@ string SendAlert::name() const
 	switch (this->message)
 	{
 		case AlertType::LOCKDOWN:
-			messageName = "LOCKDOWN";
+			messageName = "🔒 Lockdown";
 			break;
 		case AlertType::EVACUATE:
-			messageName = "EVACUATE";
+			messageName = "🏃 Evacuate";
+			break;
+		default:
+			messageName = "⚠️ Unknown";
 			break;
 	}
 
-	return "Alert: " + messageName + " (code: " + to_string(this->lastCode) + ")";
+	return "📢 Alert: " + messageName + " (legacy code: " + to_string(this->lastCode) + ")";
 }
 
 // ==== SECURE AREA (CONCRETE COMMAND) ==== //
@@ -155,13 +164,13 @@ void SecureArea::execute()
 {
 	if (this->acs == nullptr)
 	{
-		cout << "[SecureArea] refused: no access-control system" << endl;
+		cout << "⚠️ [SecureArea] Refused: no access-control system" << endl;
 		return;
 	}
 
 	if (this->secured)
 	{
-		cout << "[SecureArea] refused: " << this->area
+		cout << "⚠️ [SecureArea] Refused: " << this->area
 		     << " was already secured by this command" << endl;
 		return;
 	}
@@ -170,15 +179,15 @@ void SecureArea::execute()
 	{
 		this->acs->lockArea(this->area);
 		this->secured = true;
-		cout << "AREA_SECURED " << this->area << endl;
+		if(coordinator) coordinator->coordinate(nullptr, Events::AREA_SECURED);
 	}
 	catch (const exception& e)
 	{
-		cout << "[SecureArea] could not secure " << this->area << ": " << e.what() << endl;
+		cout << "ℹ️ [SecureArea] Could not secure " << this->area << ": " << e.what() << endl;
 	}
 	catch (...)
 	{
-		cout << "[SecureArea] could not secure " << this->area << endl;
+		cout << "⚠️ [SecureArea] Could not secure " << this->area << endl;
 	}
 }
 
@@ -186,7 +195,7 @@ void SecureArea::undo()
 {
 	if (!this->secured)
 	{
-		cout << "[SecureArea] nothing to undo: " << this->area
+		cout << "⚠️ [SecureArea] Nothing to undo: " << this->area
 		     << " was never secured by this command" << endl;
 		return;
 	}
@@ -195,21 +204,21 @@ void SecureArea::undo()
 	{
 		this->acs->unlockArea(this->area);
 		this->secured = false;
-		cout << "AREA_RELEASED " << this->area << endl;
+		cout << "🔓 Area released (" << this->area << ")" << endl;
 	}
 	catch (const exception& e)
 	{
-		cout << "[SecureArea] could not release " << this->area << ": " << e.what() << endl;
+		cout << "ℹ️ [SecureArea] Could not release " << this->area << ": " << e.what() << endl;
 	}
 	catch (...)
 	{
-		cout << "[SecureArea] could not release " << this->area << endl;
+		cout << "⚠️ [SecureArea] Could not release " << this->area << endl;
 	}
 }
 
 string SecureArea::name() const
 {
-	return "Secure: " + this->area;
+	return "🔐 Secure: " + this->area;
 }
 
 #endif // OPERATORCOMMAND_CPP

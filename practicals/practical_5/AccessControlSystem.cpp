@@ -20,17 +20,25 @@ AccessControlSystem.cpp (Receivers, Command)
 
 bool AccessControlSystem::lockArea(const string& area)
 {
-	throw "Not yet implemented";
+    if (lockedAreas.count(area) && lockedAreas.at(area))
+        throw logic_error("area '" + area + "' is already locked");
+
+    lockedAreas[area] = true;
+    return true;
 }
 
 bool AccessControlSystem::unlockArea(const string& area)
 {
-	throw "Not yet implemented";
+    if (!lockedAreas.count(area) || !lockedAreas.at(area)) 
+		throw logic_error("area '" + area + "' is already unlocked");
+
+    lockedAreas[area] = false;
+    return true;
 }
 
 bool AccessControlSystem::isLocked(const string& area) const
 {
-	throw "Not yet implemented";
+    return lockedAreas.count(area) && lockedAreas.at(area);
 }
 
 #endif // ACCESSCONTROLSYSTEM_CPP

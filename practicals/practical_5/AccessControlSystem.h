@@ -16,6 +16,7 @@ AccessControlSystem.h (Receivers, Command)
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <exception>
 
 using namespace std;
 
@@ -33,7 +34,7 @@ class AccessControlSystem
 
     public:
         /// <summary>
-        /// look up the area in lockedAreas, if it is already true throw a logic error since the area is already locked, otherwise set the area to true and return true. make sure you try/catch where this is used and cout in the function when false is returned with the reason
+        /// look up the area in lockedAreas, if it is already true throw a logic error since the area is already locked, otherwise set the area to true and return true. make sure you try/catch where this is used and cout in the function with the reason
         /// </summary>
         bool lockArea(const string& area);
         /// <summary>

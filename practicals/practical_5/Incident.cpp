@@ -30,7 +30,7 @@ void Incident::setStatus(Status status)
 	// here would duplicate every log entry and re-lock areas that are already locked
 	if (status == this->status)
 	{
-		cout << "[Incident " << this->id << "] already in this state, no notification sent" << endl;
+		cout << "[Incident " << this->id << "] Already in this state, no notification sent" << endl;
 		return;
 	}
 
@@ -42,14 +42,14 @@ void Incident::attach(IncidentObserver* observer)
 {
 	if (observer == nullptr)
 	{
-		cout << "[Incident " << this->id << "] refused a null observer" << endl;
+		cout << "[Incident " << this->id << "] Refused a null observer" << endl;
 		return;
 	}
 
 	// a duplicate attach would make the observer fire twice per change
 	if (find(this->observers.begin(), this->observers.end(), observer) != this->observers.end())
 	{
-		cout << "[Incident " << this->id << "] observer is already attached" << endl;
+		cout << "[Incident " << this->id << "] Observer is already attached" << endl;
 		return;
 	}
 

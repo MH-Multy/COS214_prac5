@@ -32,7 +32,7 @@ void IncidentLogObserver::onStatusChange(Incident& incident)
 
 	this->log.push_back(entry);
 
-	cout << "  [IncidentLog] recorded incident " << entry.id
+	cout << "  [IncidentLog] Recorded incident " << entry.id
 	     << " (" << incident.getArea() << ")" << endl;
 }
 
@@ -66,7 +66,7 @@ void AccessControlObserver::onStatusChange(Incident& incident)
 {
 	if (this->acs == nullptr)
 	{
-		cout << "  [AccessControlObserver] no access-control system attached" << endl;
+		cout << "  [AccessControlObserver] No access-control system attached" << endl;
 		return;
 	}
 
@@ -80,25 +80,25 @@ void AccessControlObserver::onStatusChange(Incident& incident)
 	{
 		if (incident.getStatus() == Status::ACTIVE)
 		{
-			cout << "  [AccessControlObserver] incident " << incident.getId()
+			cout << "  [AccessControlObserver] Incident " << incident.getId()
 			     << " is active, securing " << incident.getArea() << endl;
 			this->acs->lockArea(incident.getArea());
 		}
 		else if (incident.getStatus() == Status::RESOLVED)
 		{
-			cout << "  [AccessControlObserver] incident " << incident.getId()
+			cout << "  [AccessControlObserver] Incident " << incident.getId()
 			     << " is resolved, releasing " << incident.getArea() << endl;
 			this->acs->unlockArea(incident.getArea());
 		}
 	}
 	catch (const exception& e)
 	{
-		cout << "  [AccessControlObserver] access-control refused the request: "
+		cout << "  [AccessControlObserver] Access-control refused the request: "
 		     << e.what() << endl;
 	}
 	catch (...)
 	{
-		cout << "  [AccessControlObserver] access-control refused the request" << endl;
+		cout << "  [AccessControlObserver] Access-control refused the request" << endl;
 	}
 }
 
