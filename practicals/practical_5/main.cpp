@@ -186,7 +186,28 @@ void test_adapter()
 
 void test_observer()
 {
-    cout << "\n 🚨 [OBSERVER TESTS TO BE MADE] 🚨 \n";
+cout << "\n👁 [TESTING OBSERVER] 👁\n";
+
+    AccessControlSystem acs;
+    AccessControlObserver accessObserver(&acs);
+    IncidentLogObserver logObserver;
+
+    Incident spill(101, "Natural Sciences 2 Lab", Severity::HIGH);
+
+    spill.attach(&logObserver);
+    spill.attach(&accessObserver);
+    spill.attach(&logObserver);
+
+    spill.setStatus(Status::ACTIVE);
+    spill.setStatus(Status::ACTIVE);
+    spill.setStatus(Status::RESOLVED);
+
+    spill.detach(&accessObserver);
+    spill.detach(&accessObserver);
+
+    logObserver.printLog();
+
+    cout << "\n👁 [OBSERVER TESTING COMPLETE] 👁\n";
 }
 
 void command_mediator_chain()
