@@ -19,6 +19,12 @@ COS 214 Practical 5 — *CampusGuard: Emergency Response Coordination*
 For the full PDF with required tasks, click <a href="practicals/practical_5/doc/COS_214_PA_5.pdf">here</a>
 
 ---
+Before running anything, if you're in the repository ensure you are in the correct directory!
+```bash
+cd practicals/practical_5
+```
+
+---
 
 ## 🏗️ System Concept
 

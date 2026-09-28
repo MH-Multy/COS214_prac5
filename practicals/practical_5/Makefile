@@ -3,7 +3,7 @@
 # Jay Macaskill (25198387)
 
 # COS 214 (Software Modelling) Practical 5
-# Last Modified: 28 September 2026
+# Last Modified: 29 September 2026
 
 # Makefile
 
@@ -34,6 +34,8 @@ $(DEMO_TARGET): $(DEMO_OBJ)
 
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+
+demo.o: CXXFLAGS += -DCAMPUSGUARD_DEMO
 
 -include $(DEP)
 
