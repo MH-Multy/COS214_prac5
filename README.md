@@ -209,6 +209,8 @@ including the quick demo, a full menu walk, and the demo's input closing mid-men
 
 ## 📐 Diagrams
 
+For a full PDF with required diagrams, click <a href="practicals/practical_5/doc/Diagrams.pdf">here</a>
+
 <p align="center">
   <img src="practicals/practical_5/img/class.jpg" height="450" alt="UML class diagram" />
   <br/><sub><em>UML class diagram</em></sub>
