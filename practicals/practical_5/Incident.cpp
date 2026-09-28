@@ -4,7 +4,7 @@ Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 27 September 2026
+Last Modified: 28 September 2026
 
 Incident.cpp (ConcreteSubject/Domain, Observer)
 */
@@ -26,11 +26,26 @@ Incident::Incident(int id, string area, Severity severity)
 
 void Incident::setStatus(Status status)
 {
+	if (status == Status::REPORTED && this->status == Status::REPORTED)
+	{
+		notifyAll();
+		return;
+	}
+
 	// a status that has not actually changed is not a status change; notifying
 	// here would duplicate every log entry and re-lock areas that are already locked
 	if (status == this->status && status != Status::REPORTED)
 	{
 		cout << "⚠️ [Incident " << this->id << "] already in this state, no notification sent" << endl;
+		return;
+	}
+
+	bool valid = (this->status == Status::REPORTED && (status == Status::ACTIVE || status == Status::RESOLVED)) ||
+	(this->status == Status::ACTIVE && status == Status::RESOLVED);
+
+	if (!valid)
+	{
+		cout << "⚠️ [Incident " << this->id << "] invalid transition refused" << endl;
 		return;
 	}
 
