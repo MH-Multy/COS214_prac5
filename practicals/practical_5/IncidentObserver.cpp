@@ -58,7 +58,11 @@ void IncidentLogObserver::printLog() const
 				break;
 		}
 
-		cout << "   Incident #" << it->id << "  ->  " << statusName << endl;
+		time_t ts = it->timestamp;
+		string time_string = ctime(&ts);
+		time_string.pop_back();
+
+		cout << "[" << time_string << "] Incident #" << it->id << "  ->  " << statusName << endl;
 	}
 	cout << "📜 ==================================================" << endl;
 }
