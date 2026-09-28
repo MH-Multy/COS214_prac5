@@ -4,7 +4,7 @@ Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 27 September 2026
+Last Modified: 28 September 2026
 
 OperatorCommand.cpp (Command & Concrete Command, Command)
 */
@@ -28,20 +28,17 @@ DispatchUnit::DispatchUnit(ResponseUnit* unit)
 
 void DispatchUnit::execute()
 {
+	// a refused command throws, so OperatorConsole reports it as failed and
+	// never records it in the history (a refusal must not look like a success)
 	if (this->unit == nullptr)
-	{
-		cout << "⚠️ [DispatchUnit] Refused: no unit assigned" << endl;
-		return;
-	}
+		throw runtime_error("no unit assigned");
 
-	// without this guard a repeated dispatch silently re-sends a unit that is
-	// already deployed, and a later undo recalls it from the wrong incident
 	if (this->dispatched)
-	{
-		cout << "⚠️ [DispatchUnit] Refused: " << this->unit->getName()
-		     << " has already been dispatched by this command" << endl;
-		return;
-	}
+		throw runtime_error(this->unit->getName() + " has already been dispatched by this command");
+
+	// one main team of each kind covers campus: if it is busy, it lets us know
+	if (this->unit->isDispatched())
+		throw runtime_error(this->unit->getName() + " is busy, it is already on the scene");
 
 	this->unit->dispatch();
 	this->dispatched = true;
@@ -82,31 +79,24 @@ SendAlert::SendAlert(AlertSender* sender, IncidentCoordinator* coordinator, Aler
 void SendAlert::execute()
 {
 	if (this->sender == nullptr)
-	{
-		cout << "⚠️ [SendAlert] Refused: no alert service configured" << endl;
-		return;
-	}
+		throw runtime_error("no alert service configured");
 
 	if (this->lastCode != -1)
-	{
-		cout << "⚠️ [SendAlert] Refused: this alert has already been issued" << endl;
-		return;
-	}
+		throw runtime_error("this alert has already been issued");
 
 	this->lastCode = this->sender->notify(this->message);
 
 	if (this->lastCode == -1 || this->lastCode == 404)
 	{
-		cout << "❌ ALERT_NOT_DELIVERED" << endl;
 		this->lastCode = -1;
-		return;
+		throw runtime_error("ALERT_NOT_DELIVERED");
 	}
 
 	cout << "✅ ALERT_DELIVERED " << name() << endl;
 
 	// on successful delivery, tell the mediator so it can route to the right team
 	if (this->coordinator != nullptr)
-    {
+	{
 		switch (this->message)
 		{
 			case AlertType::EVACUATE:
@@ -163,32 +153,15 @@ SecureArea::SecureArea(AccessControlSystem* acs, IncidentCoordinator* coordinato
 void SecureArea::execute()
 {
 	if (this->acs == nullptr)
-	{
-		cout << "⚠️ [SecureArea] Refused: no access-control system" << endl;
-		return;
-	}
+		throw runtime_error("no access-control system");
 
 	if (this->secured)
-	{
-		cout << "⚠️ [SecureArea] Refused: " << this->area
-		     << " was already secured by this command" << endl;
-		return;
-	}
+		throw runtime_error(this->area + " was already secured by this command");
 
-	try
-	{
-		this->acs->lockArea(this->area);
-		this->secured = true;
-		if(coordinator) coordinator->coordinate(nullptr, Events::AREA_SECURED);
-	}
-	catch (const exception& e)
-	{
-		cout << "ℹ️ [SecureArea] Could not secure " << this->area << ": " << e.what() << endl;
-	}
-	catch (...)
-	{
-		cout << "⚠️ [SecureArea] Could not secure " << this->area << endl;
-	}
+	// lockArea throws if the area is already locked, OperatorConsole reports it
+	this->acs->lockArea(this->area);
+	this->secured = true;
+	if (coordinator) coordinator->coordinate(nullptr, Events::AREA_SECURED);
 }
 
 void SecureArea::undo()

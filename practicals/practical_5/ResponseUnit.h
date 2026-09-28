@@ -4,7 +4,7 @@ Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 27 September 2026
+Last Modified: 28 September 2026
 
 ResponseUnit.h (Colleagues, Mediator)
 */
@@ -31,6 +31,7 @@ class ResponseUnit
 		string getName() const { return this->name; }
 		virtual void dispatch() = 0;
 		virtual void recall() = 0;
+		virtual bool isDispatched() const = 0;
 
 		// allows to set a coordinator after construction
 		void setCoordinator(IncidentCoordinator* coordinator) { this->coordinator = coordinator; }
@@ -64,7 +65,7 @@ class SecurityTeam : public ResponseUnit
 		/// </summary>
 		void handleEvent(const string& event) override;
 		bool isPerimeterSecured() const { return this->perimeterSecured; }
-		bool isDispatched() const { return dispatched; }
+		bool isDispatched() const override { return dispatched; }
 
 	private:
 		bool dispatched = false;
@@ -78,7 +79,7 @@ class MedicalTeam : public ResponseUnit
 		void dispatch();
 		void recall();
 		bool isTreating() const { return treating; }
-		bool isDispatched() const { return dispatched; }
+		bool isDispatched() const override { return dispatched; }
 		void handleEvent(const string& event) override;
 
 	private:
@@ -93,7 +94,7 @@ class FacilitiesTeam : public ResponseUnit
 		void dispatch();
 		void recall();
 		bool areExitsOpened() const { return exitsOpened; }
-		bool isDispatched() const { return dispatched; }
+		bool isDispatched() const override { return dispatched; }
 		void handleEvent(const string& event) override;
 
 	private:
