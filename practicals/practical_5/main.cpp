@@ -202,9 +202,6 @@ cout << "\n👁 [TESTING OBSERVER] 👁\n";
     spill.setStatus(Status::ACTIVE);
     spill.setStatus(Status::RESOLVED);
 
-    spill.detach(&accessObserver);
-    spill.detach(&accessObserver);
-
     logObserver.printLog();
 
     cout << "\n👁 [OBSERVER TESTING COMPLETE] 👁\n";
