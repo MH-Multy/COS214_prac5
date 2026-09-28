@@ -4,7 +4,7 @@ Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 27 September 2026
+Last Modified: 28 September 2026
 
 main.cpp (Static tests)
 */
@@ -186,7 +186,25 @@ void test_adapter()
 
 void test_observer()
 {
-    cout << "\n 🚨 [OBSERVER TESTS TO BE MADE] 🚨 \n";
+cout << "\n👁 [TESTING OBSERVER] 👁\n";
+
+    AccessControlSystem acs;
+    AccessControlObserver accessObserver(&acs);
+    IncidentLogObserver logObserver;
+
+    Incident spill(101, "Natural Sciences 2 Lab", Severity::HIGH);
+
+    spill.attach(&logObserver);
+    spill.attach(&accessObserver);
+    spill.attach(&logObserver);
+
+    spill.setStatus(Status::ACTIVE);
+    spill.setStatus(Status::ACTIVE);
+    spill.setStatus(Status::RESOLVED);
+
+    logObserver.printLog();
+
+    cout << "\n👁 [OBSERVER TESTING COMPLETE] 👁\n";
 }
 
 void command_mediator_chain()
