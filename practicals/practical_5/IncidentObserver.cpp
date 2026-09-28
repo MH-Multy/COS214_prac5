@@ -4,7 +4,7 @@ Mohammadhossein Jafari (25312040)
 Jay Macaskill (25198387)
 
 COS 214 (Software Modelling) Practical 5
-Last Modified: 27 September 2026
+Last Modified: 28 September 2026
 
 IncidentObserver.cpp (Observers, Observer)
 */
@@ -60,7 +60,7 @@ void IncidentLogObserver::printLog() const
 
 		cout << "   Incident #" << it->id << "  ->  " << statusName << endl;
 	}
-	cout << "📜 =======================================" << endl;
+	cout << "📜 ==================================================" << endl;
 }
 
 // ==== ACCESS CONTROL OBSERVER (CONCRETE OBSERVER) ===== //

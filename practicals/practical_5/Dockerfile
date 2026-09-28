@@ -3,7 +3,7 @@
 # Jay Macaskill (25198387)
 
 # COS 214 (Software Modelling) Practical 5
-# Last Modified: 27 September 2026
+# Last Modified: 28 September 2026
 
 # Dockerfile
 
@@ -19,4 +19,4 @@ COPY . /campusguard/
 
 RUN make clean && make
 
-CMD ["./campusguard"]
+CMD ["./demo"]

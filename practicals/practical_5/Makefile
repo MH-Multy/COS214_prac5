@@ -3,7 +3,7 @@
 # Jay Macaskill (25198387)
 
 # COS 214 (Software Modelling) Practical 5
-# Last Modified: 27 September 2026
+# Last Modified: 28 September 2026
 
 # Makefile
 
@@ -18,7 +18,7 @@ DEMO_SRC := $(filter-out main.cpp, $(SRC))
 MAIN_OBJ := $(MAIN_SRC:.cpp=.o)
 DEMO_OBJ := $(DEMO_SRC:.cpp=.o)
 
-OBJ := $(MAIN_OBJ) $(DEMO_OBJ)
+OBJ := $(sort $(MAIN_OBJ) $(DEMO_OBJ))
 DEP := $(OBJ:.o=.d)
 
 TARGET      := campusguard
