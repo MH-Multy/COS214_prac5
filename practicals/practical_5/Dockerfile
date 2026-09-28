@@ -19,4 +19,4 @@ COPY . /campusguard/
 
 RUN make clean && make
 
-CMD ["./demo"]
+CMD ["sh", "-c", "echo demo | ./demo"]

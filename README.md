@@ -127,22 +127,16 @@ No local dependencies are required — the `Dockerfile` provides `g++`, `make`, 
 ```bash
 docker compose up --build
 ```
-This builds the image from the Dockerfile and starts the container. The interactive demo begins automatically.
+This builds the image from the Dockerfile and starts the container. The interactive demo begins automatically and runs statically without user input.
 
 **Run the static tests**
 ```bash
 docker compose run --rm campusguard ./campusguard
 ```
 
-**Run the demo**
+**Run the demo interactively**
 ```bash
 docker compose run --rm campusguard ./demo
-```
-
-**Manual method**
-```bash
-docker build -t campusguard:latest .
-docker run --rm -it campusguard:latest
 ```
 
 **Debug with GDB** (drop into a shell instead of running directly):
@@ -157,7 +151,6 @@ gdb ./demo        # interactive
 docker compose run --rm campusguard make valgrind      # static scenarios
 docker compose run --rm campusguard make valgrind-demo # interactive demo
 ```
-
 ---
 
 ## 🛠️ Building
